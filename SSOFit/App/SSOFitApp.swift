@@ -13,6 +13,7 @@ struct SSOFitApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
 
     @State private var auth = AuthService()
+    @State private var profileService = ProfileService()
 
     init() {
         FontCheck.verify()
@@ -22,6 +23,7 @@ struct SSOFitApp: App {
         WindowGroup {
             RootView()
                 .environment(auth)
+                .environment(profileService)
         }
     }
 }

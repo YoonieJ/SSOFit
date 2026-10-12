@@ -7,5 +7,7 @@
 		<string>Quicksand-Variable.ttf</string>
 		<string>DMSans-Variable.ttf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>SSOFit uses the camera so you can take a profile photo.</string>
 </dict>
 </plist>

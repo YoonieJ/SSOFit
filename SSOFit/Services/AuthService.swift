@@ -11,6 +11,7 @@ import FirebaseAuth
 @Observable
 final class AuthService {
     private(set) var isSignedIn = false
+    private(set) var uid: String?
     // False until the listener reports once, so the app does not flash Welcome for a signed-in user.
     private(set) var isReady = false
 
@@ -24,6 +25,7 @@ final class AuthService {
         }
         listener = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             self?.isSignedIn = user != nil
+            self?.uid = user?.uid
             self?.isReady = true
         }
     }
@@ -44,6 +46,22 @@ final class AuthService {
 
     func signOut() throws {
         try Auth.auth().signOut()
+        ReminderService.removeAll()
+    }
+
+    // Deleting an account needs a recent sign-in, so the password is checked again first.
+    func reauthenticate(password: String) async throws {
+        guard let user = Auth.auth().currentUser, let email = user.email else {
+            throw NSError(domain: AuthErrorDomain, code: AuthErrorCode.userNotFound.rawValue)
+        }
+        try await user.reauthenticate(with: EmailAuthProvider.credential(withEmail: email, password: password))
+    }
+
+    func deleteUser() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw NSError(domain: AuthErrorDomain, code: AuthErrorCode.userNotFound.rawValue)
+        }
+        try await user.delete()
     }
 
     func sendPasswordReset(email: String) async throws {
