@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+DerivedData/
+build/
+*.xcuserstate
+*.xcscmblueprint
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Firebase config (contains the project's API key and IDs)
+GoogleService-Info.plist
+
+# Tooling
+.serena/
+.claude/
+graphify-out/
+
+# Downloaded font bundle (the used fonts live in SSOFit/Resources/Fonts)
+DM_Sans,Iosevka_Charon_Mono,Quicksand/
